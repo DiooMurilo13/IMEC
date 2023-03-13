@@ -25,11 +25,6 @@ export default function RoutesLogin() {
         component={CadastroScreen}
         options={{ headerShown: false }}
       />
-      <Stack.Screen
-        name="Main"
-        component={Main}
-        options={{ headerShown: false }}
-      />
     </Stack.Navigator>
   );
 }

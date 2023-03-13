@@ -3,10 +3,11 @@ import { ScreenView } from "./file";
 declare global {
   namespace ReactNavigation {
     interface RootParamList extends ScreenView {
-      [ScreenView.HOME]: string;
-      [ScreenView.LOGINSCREEN]: string;
-      [ScreenView.CADASTROSCREEN]: string;
-      [ScreenView.MAIN]: string;
+      [ScreenView.HOME]: string | params;
+      [ScreenView.LOGINSCREEN]: string | params;
+      [ScreenView.CADASTROSCREEN]: string | params;
+      [ScreenView.MAIN]: string | params;
+      [ScreenView.CARDHISTORY]: string | params;
     }
   }
 }

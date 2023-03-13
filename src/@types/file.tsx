@@ -3,4 +3,5 @@ export enum ScreenView {
   LOGINSCREEN = "LoginScreen",
   CADASTROSCREEN = "CadastroScreen",
   MAIN = "Main",
+  CARDHISTORY = "CardHistory",
 }
