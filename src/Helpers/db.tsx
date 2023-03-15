@@ -1,3 +1,3 @@
 export enum db {
-  Clientes = "Clientes",
+  clientes = "Clientes",
 }

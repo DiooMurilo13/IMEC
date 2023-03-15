@@ -1,57 +1,46 @@
 import React, { useState, useEffect } from "react";
 import { Button } from "../../components/Button";
-import { Add, deslogar, Get } from "../../firebase/Auth";
 import { useNavigation } from "@react-navigation/native";
 import { ScreenView } from "../../@types/file";
-import { useForm } from "react-hook-form";
 import * as Animatable from "react-native-animatable";
-import LoginForm from "../../components/LoginForm";
-import { auth, cadastrar } from "../../firebase/Auth";
-import { Text, View, KeyboardAvoidingView, ScrollView } from "react-native";
+import { View, ScrollView } from "react-native";
 import { Card } from "../../components/Card";
+import { Database } from "../../firebase/FirebaseHelper";
+import { AddValue } from "../../firebase/AddValue";
 import { db } from "../../Helpers/db";
-
-interface IUser {
-  email: string | undefined;
-}
+import { Where } from "../../firebase/Where";
+import { condition } from "../../Helpers/Interfaces/Condition";
 
 const Main: React.FC = () => {
+  const database = new Database();
+
+  const where = new Where();
+  where.add("Nome", condition.EQUALS, "Pedro");
+  where.add("Nome", condition.NOT_EQUALS, "jose");
+
   const navigation = useNavigation();
-  const [user, setUser] = useState<IUser>(null);
   const [clientes, setClientes] = useState([]);
   const [reload, setReload] = useState(false);
 
   useEffect(() => {
     const getClientes = async () => {
-      setClientes(await Get("Clientes"));
+      setClientes(await database.select(db.clientes, where.list));
     };
-    const deslog = auth.onAuthStateChanged((_user) => {
-      setUser(_user);
-    });
+
     setReload(false);
     getClientes();
-    return deslog;
   }, [reload]);
 
-  async function signOff() {
-    deslogar();
+  async function teste() {
+    const value = new AddValue();
+    value.addNewClient("Pedro", "sobrenome", 60000000);
+    value.addNewHist("cadastrou");
+
+    database.insert(db.clientes, value.clientList, value.histList);
   }
 
-  async function addClient() {
-    const values = [
-      {
-        Nome: "pia3",
-        Sobrenome: "PIA3",
-        Celular: 11,
-      },
-      {
-        Nome: "pia4",
-        Sobrenome: "PIA43",
-        Celular: 11,
-      },
-    ];
-
-    await Add(db.Clientes, values);
+  async function signOff() {
+    database.deslogar();
   }
 
   return (
@@ -61,7 +50,7 @@ const Main: React.FC = () => {
         animation="fadeInUp"
         className="flex-1 bg-cyan-100 rounded-t-3xl"
       >
-        <View className="flex-1 my-10">
+        <View className="flex-1 ">
           <ScrollView>
             {clientes.map((user) => {
               return (
@@ -76,8 +65,13 @@ const Main: React.FC = () => {
             })}
           </ScrollView>
         </View>
-        <Button name="addclient" className="p-10" onPress={addClient} />
-        <Button name="deslogar" className="p-10" onPress={signOff} />
+        <View className="h-1 justify-end items-end">
+          <Button
+            name="deslogar"
+            className="bg-cyan-400 w-20 h-20 mb-10 mr-5"
+            onPress={teste}
+          />
+        </View>
       </Animatable.View>
     </View>
   );

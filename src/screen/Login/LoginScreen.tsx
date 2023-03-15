@@ -4,13 +4,11 @@ import { useForm } from "react-hook-form";
 import * as Animatable from "react-native-animatable";
 import LoginForm from "../../components/LoginForm";
 import { Button } from "../../components/Button";
-import { cadastrar, logar } from "../../firebase/Auth";
 import { useNavigation } from "@react-navigation/native";
-import { ScreenView } from "../../@types/file";
+import { Database } from "../../firebase/FirebaseHelper";
 
 const LoginScreen: React.FC = () => {
-  const navigation = useNavigation();
-
+  const database = new Database();
   const {
     control,
     handleSubmit,
@@ -23,7 +21,7 @@ const LoginScreen: React.FC = () => {
   });
 
   async function onSubmit(data) {
-    await logar(data);
+    await database.logar(data);
   }
 
   return (

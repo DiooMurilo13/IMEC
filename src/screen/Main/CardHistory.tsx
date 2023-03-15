@@ -1,24 +1,23 @@
 import React, { useState, useEffect } from "react";
-import { condition, Get, MyWhere } from "../../firebase/Auth";
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import * as Animatable from "react-native-animatable";
 import { Text, View } from "react-native";
+import { Database } from "../../firebase/FirebaseHelper";
 
 export interface ICliente {
   id: any;
-  Nome: string;
-  Sobrenome: string;
-  Celular: number;
 }
 
 const CardHistory: React.FC<ICliente> = () => {
-  const navigation = useNavigation();
+  const database = new Database();
   const [clienteHistory, setClienteHistory] = useState([]);
   const route = useRoute<RouteProp<Record<string, ICliente>, string>>();
 
   useEffect(() => {
     const getClientes = async () => {
-      setClienteHistory(await Get(`Clientes/${route.params.id}/Historico`));
+      setClienteHistory(
+        await database.select(`Clientes/${route.params.id}/Historico`)
+      );
     };
 
     getClientes();

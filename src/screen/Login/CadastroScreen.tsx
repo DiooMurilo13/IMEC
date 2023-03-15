@@ -4,9 +4,11 @@ import { useForm } from "react-hook-form";
 import * as Animatable from "react-native-animatable";
 import LoginForm from "../../components/LoginForm";
 import { Button } from "../../components/Button";
-import { auth, cadastrar } from "../../firebase/Auth";
+import { auth } from "../../firebase/Auth";
+import { Database } from "../../firebase/FirebaseHelper";
 
 const CadastroScreen: React.FC = () => {
+  const database = new Database();
   const {
     control,
     handleSubmit,
@@ -19,7 +21,7 @@ const CadastroScreen: React.FC = () => {
   });
 
   async function onSubmit(data) {
-    await cadastrar(data);
+    await database.cadastrar(data);
     await auth.signOut();
   }
 
