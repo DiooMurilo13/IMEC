@@ -8,6 +8,7 @@ declare global {
       [ScreenView.CADASTROSCREEN]: string | params;
       [ScreenView.MAIN]: string | params;
       [ScreenView.CARDHISTORY]: string | params;
+      [ScreenView.ADDNEWCLIENT]: string | params;
     }
   }
 }

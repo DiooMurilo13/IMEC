@@ -1,4 +1,5 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import AddNewClient from "../screen/Main/AddNewClient";
 import CardHistory from "../screen/Main/CardHistory";
 import Main from "../screen/Main/Main";
 
@@ -15,6 +16,11 @@ export default function RoutesIsLogged() {
       <Stack.Screen
         name="CardHistory"
         component={CardHistory}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="AddNewClient"
+        component={AddNewClient}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>

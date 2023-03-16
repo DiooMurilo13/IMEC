@@ -2,15 +2,23 @@ export class AddValue {
   clientList = [];
   histList = [];
 
-  addNewClient(nome: string, sobrenome: string, celular: number) {
-    const newObj = { Nome: nome, Sobrenome: sobrenome, Celular: celular };
+  addNewClient(
+    nome: string,
+    telefone: string,
+    endereco: number,
+    meioPagamnento: string,
+    hist: string
+  ) {
+    const newObj = {
+      nome: nome,
+      telefone: telefone,
+      endereco: endereco,
+      meioPagamnento: meioPagamnento,
+    };
+
+    const newObjH = { Acao: hist };
 
     this.clientList.push(newObj);
-  }
-
-  addNewHist(Acao: string) {
-    const newObj = { Acao: Acao };
-
-    this.histList.push(newObj);
+    this.histList.push(newObjH);
   }
 }

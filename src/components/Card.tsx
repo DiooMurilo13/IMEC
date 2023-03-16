@@ -21,7 +21,10 @@ function CardStyled({ name, funcao, onPress, ...rest }: ICardFormProps) {
         >
           {!!funcao && funcao}
           {!!name && (
-            <Text className="bg-blue-200 font-bold text-4xl text-start pl-5 items-center w-full">
+            <Text
+              numberOfLines={1}
+              className="bg-blue-400 font-bold text-4xl text-start pl-5 items-center w-full"
+            >
               {name}
             </Text>
           )}

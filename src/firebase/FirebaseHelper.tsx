@@ -27,10 +27,7 @@ export class Database {
           try {
             const docRef = await addDoc(tab, v);
             if (histRef.length >= 1) {
-              const tabRef = collection(
-                db,
-                table + "/" + docRef.id + "/historico"
-              );
+              const tabRef = collection(db, `${table}/${docRef.id}/historico`);
               await addDoc(tabRef, histRef[i]);
             }
           } catch (e) {
@@ -41,7 +38,7 @@ export class Database {
   }
 
   async select(tabela?: string, myWhere?: any[]) {
-    const db = getFirestore(app);
+    const db = await getFirestore(app);
 
     let collectionRef;
     if (myWhere) {

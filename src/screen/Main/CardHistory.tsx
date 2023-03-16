@@ -5,6 +5,7 @@ import { Text, View } from "react-native";
 import { Database } from "../../firebase/FirebaseHelper";
 
 export interface ICliente {
+  reload: boolean;
   id: any;
 }
 
@@ -16,7 +17,7 @@ const CardHistory: React.FC<ICliente> = () => {
   useEffect(() => {
     const getClientes = async () => {
       setClienteHistory(
-        await database.select(`Clientes/${route.params.id}/Historico`)
+        await database.select(`Clientes/${route.params.id}/historico`)
       );
     };
 

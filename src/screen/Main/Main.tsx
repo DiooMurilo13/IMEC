@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { Button } from "../../components/Button";
-import { useNavigation } from "@react-navigation/native";
 import { ScreenView } from "../../@types/file";
 import * as Animatable from "react-native-animatable";
 import { View, ScrollView } from "react-native";
@@ -8,39 +7,31 @@ import { Card } from "../../components/Card";
 import { Database } from "../../firebase/FirebaseHelper";
 import { AddValue } from "../../firebase/AddValue";
 import { db } from "../../Helpers/db";
-import { Where } from "../../firebase/Where";
-import { condition } from "../../Helpers/Interfaces/Condition";
+import { Text } from "react-native";
+import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
+import { ICliente } from "./CardHistory";
+import { auth } from "../../firebase/Auth";
 
 const Main: React.FC = () => {
   const database = new Database();
-
-  const where = new Where();
-  where.add("Nome", condition.EQUALS, "Pedro");
-  where.add("Nome", condition.NOT_EQUALS, "jose");
-
   const navigation = useNavigation();
   const [clientes, setClientes] = useState([]);
+  const [user, setUser] = useState(null);
   const [reload, setReload] = useState(false);
 
   useEffect(() => {
     const getClientes = async () => {
-      setClientes(await database.select(db.clientes, where.list));
+      setClientes(await database.select(db.clientes));
     };
+    console.log("aa");
 
-    setReload(false);
     getClientes();
+
+    navigation.addListener("focus", () => setReload(!reload));
   }, [reload]);
 
-  async function teste() {
-    const value = new AddValue();
-    value.addNewClient("Pedro", "sobrenome", 60000000);
-    value.addNewHist("cadastrou");
-
-    database.insert(db.clientes, value.clientList, value.histList);
-  }
-
-  async function signOff() {
-    database.deslogar();
+  function reloads() {
+    navigation.navigate(ScreenView.ADDNEWCLIENT);
   }
 
   return (
@@ -56,7 +47,7 @@ const Main: React.FC = () => {
               return (
                 <Card
                   key={user.id}
-                  name={user.Nome}
+                  name={user.nome}
                   onPress={() =>
                     navigation.navigate(ScreenView.CARDHISTORY, { id: user.id })
                   }
@@ -67,9 +58,9 @@ const Main: React.FC = () => {
         </View>
         <View className="h-1 justify-end items-end">
           <Button
-            name="deslogar"
-            className="bg-cyan-400 w-20 h-20 mb-10 mr-5"
-            onPress={teste}
+            className="bg-blue-400 w-20 h-20 mb-10 mr-5"
+            onPress={reloads}
+            funcao={<Text className="text-3xl">+</Text>}
           />
         </View>
       </Animatable.View>

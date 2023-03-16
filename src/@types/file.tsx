@@ -4,4 +4,5 @@ export enum ScreenView {
   CADASTROSCREEN = "CadastroScreen",
   MAIN = "Main",
   CARDHISTORY = "CardHistory",
+  ADDNEWCLIENT = "AddNewClient",
 }
