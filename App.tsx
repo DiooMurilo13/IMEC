@@ -24,7 +24,7 @@ const App: React.FC = () => {
 
   return (
     <NavigationContainer>
-      <StatusBar backgroundColor="rgb(14,116,144)" hidden={false} />
+      <StatusBar backgroundColor="rgb(147 51 234)" hidden={false} />
       {user ? <RoutesIsLogged /> : <RoutesLogin />}
     </NavigationContainer>
   );

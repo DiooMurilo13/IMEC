@@ -3,6 +3,7 @@ import { Text, View, TextInput, KeyboardAvoidingView } from "react-native";
 import { Control, Controller, FieldErrors, FormState } from "react-hook-form";
 import { TextInputMask } from "react-native-masked-text";
 import DropDownPicker from "react-native-dropdown-picker";
+import { Keyboard } from "react-native";
 
 interface Form {
   control: Control<any, any>;
@@ -93,6 +94,7 @@ const Form: React.FC<Form> = ({ control, errors, name }: Form) => {
                     backgroundColor: "#0E7491",
                     height: 80,
                   }}
+                  onPress={() => Keyboard.dismiss()}
                   placeholder="Meios de pagamento"
                   onChangeValue={(value) => onChange(value)}
                   open={open}

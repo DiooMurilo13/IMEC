@@ -1,3 +1,4 @@
+import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import AddNewClient from "../screen/Main/AddNewClient";
 import CardHistory from "../screen/Main/CardHistory";

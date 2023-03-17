@@ -1,6 +1,7 @@
 import React from "react";
 import { Text, TouchableOpacity, View } from "react-native";
 import { styled } from "nativewind";
+import { TextInput } from "react-native";
 
 interface ICardFormProps {
   name?: string;
@@ -15,16 +16,13 @@ function CardStyled({ name, funcao, onPress, ...rest }: ICardFormProps) {
     <>
       <View className="m-3 text-start">
         <TouchableOpacity
-          className=" items-center flex-row justify-center bg-green-500 rounded-2xl py-10"
+          className=" items-center flex-row justify-center bg-gray-200 rounded-xl py-10"
           {...rest}
           onPress={onPress}
         >
           {!!funcao && funcao}
           {!!name && (
-            <Text
-              numberOfLines={1}
-              className="bg-blue-400 font-bold text-4xl text-start pl-5 items-center w-full"
-            >
+            <Text className="font-bold text-2xl text-start pl-5 items-center w-full">
               {name}
             </Text>
           )}
