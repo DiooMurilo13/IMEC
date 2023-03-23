@@ -3,17 +3,19 @@ export class AddValue {
   histList = [];
 
   addNewClient(
+    clientesId: number,
     nome: string,
     telefone: string,
     endereco: number,
-    meioPagamnento: string,
+    dataCadastro: string,
     hist: string
   ) {
     const newObj = {
+      ClientesId: clientesId,
       nome: nome,
       telefone: telefone,
       endereco: endereco,
-      meioPagamnento: meioPagamnento,
+      dataCadastro: dataCadastro,
     };
 
     const newObjH = { Acao: hist };

@@ -8,6 +8,8 @@ import "firebase/firestore";
 import {
   addDoc,
   collection,
+  doc,
+  getDoc,
   getDocs,
   getFirestore,
   query,
@@ -37,10 +39,11 @@ export class Database {
     }
   }
 
-  async select(tabela?: string, myWhere?: any[]) {
+  async select(tabela: string, myWhere?: any[] | null, join?: any) {
     const db = await getFirestore(app);
-
+    let retorno;
     let collectionRef;
+
     if (myWhere) {
       const conditions = myWhere.map((v) => {
         return where(v.collumn, v.condition, v.value);
@@ -52,13 +55,44 @@ export class Database {
     }
 
     const data = await getDocs(collectionRef);
-    const retorno = data.docs.map((doc) => ({
+    retorno = data.docs.map((doc) => ({
       id: doc.id,
       ...(doc.data() as object),
     }));
 
+    if (join) {
+      //seguinte vamo la explicar esse join aq.
+      const joinResults = [];
+      await Promise.all(
+        //fiz isso pq ele recebe um array de object, ou seja diversas promises, mas com esse carinha ele só vai me retornar um, bom eu acho que funciona assim,("sim funcionou.")
+        data.docs.map(async (tableMain) => {
+          //pego meu select acima e rodo um foreach
+          const fk = tableMain.data()[join + "Id"]; //pego dentro da tabela principal do select, a ligação da minha tabela de join
+          if (fk != undefined || fk != 0) {
+            // fiz isso pq as vezes me dava uns undefined mt doido
+            const queryRef = query(
+              //aqui eu preparo um select na tabela do join, trazendo apenas os registros que tem o mesmo id que existe na minha tabela principal.
+              collection(db, join),
+              where(`${join}Id`, "==", fk)
+            );
+
+            const queryParams = await getDocs(queryRef); //aqui ele vai fazer o select.
+            queryParams.forEach((queryParamMain) => {
+              // com os dados na mao a gnt roda um foreach e coloca dentro da lista o join, sendo {tabelaPrincipal:dados + tabelaJoin:dados}
+              joinResults.push({
+                id: tableMain.id, //obs se tu n passar essa poha de ID vai dar mt ruim la na frente pq ele n reconhece id e da ruim nos maps.
+                ...(tableMain.data() as object),
+                ...(queryParamMain.data() as object),
+              });
+            });
+          }
+        })
+      );
+      retorno = joinResults;
+    }
     return retorno;
   }
+
   async cadastrar(data) {
     await createUserWithEmailAndPassword(auth, data.login, data.password)
       .then((userCredential) => {

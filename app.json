@@ -1,6 +1,7 @@
 {
   "expo": {
-    "name": "scale-builder",
+    "plugins": [["expo-document-picker"]],
+    "name": "IMEC",
     "slug": "scale-builder",
     "version": "1.0.0",
     "orientation": "portrait",

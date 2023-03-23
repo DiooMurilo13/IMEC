@@ -3,7 +3,7 @@ import { condition, IWhere } from "../Helpers/Interfaces/Condition";
 export class Where {
   list = [];
 
-  add(collumn: string, condition: condition, value: string) {
+  add(collumn: string, condition: condition, value: string | number) {
     const newObj = {
       collumn: collumn,
       condition: condition,

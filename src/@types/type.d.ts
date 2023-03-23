@@ -12,3 +12,18 @@ declare global {
     }
   }
 }
+
+declare module "expo-camera" {
+  export type CameraConstantsType = {
+    Type: {
+      front: CameraType;
+      back: CameraType;
+    };
+    FlashMode: {
+      on: CameraFlashMode;
+      off: CameraFlashMode;
+      auto: CameraFlashMode;
+      torch: CameraFlashMode;
+    };
+  };
+}

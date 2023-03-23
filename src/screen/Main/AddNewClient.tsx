@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { Button } from "../../components/Button";
 import { useNavigation } from "@react-navigation/native";
 import { ScreenView } from "../../@types/file";
@@ -22,29 +22,43 @@ const AddNewClient: React.FC = () => {
 
   async function handleAdd(data) {
     const value = new AddValue();
+    const currentDate = new Date();
+    const year = currentDate.getFullYear();
+    const month = currentDate.getMonth() + 1;
+    const day = currentDate.getDate();
+    const formattedDate = `${day}/${month}/${year}`; // pega data atual e formata pra min
+
+    const getLastClientId = await database.select(db.clientes);
+
     value.addNewClient(
-      data.nome,
+      getLastClientId.length + 1,
+      data.nome, //lembrar de pegar esse cara inteiro e jogar pra dentro do firebaseHelper
       data.telefone,
       data.endereco,
-      data.meioPagamento,
+      formattedDate,
       "Cadastrou"
     );
+
     await database.insert(db.clientes, value.clientList, value.histList);
     navigation.navigate(ScreenView.MAIN);
   }
 
   return (
-    <View className="flex-1 bg-cyan-700">
+    <View className="flex-1 bg-purple-600">
       <Animatable.View
         delay={600}
         animation="fadeInUp"
-        className="flex-1 bg-cyan-100 rounded-t-3xl "
+        className="flex-1 bg-cyan-100 rounded-t-3xl mt-5 "
       >
         <Form control={control} name={"Cadastro"} errors={errors} />
         <View className=" justify-center items-center mb-5">
           <Button
-            className="h-16 w-80 "
-            funcao={<Text className="text-2xl font-bold">Cadastro</Text>}
+            className="h-20 w-80 "
+            funcao={
+              <Text className="text-2xl font-bold text-myColor-100">
+                Cadastro
+              </Text>
+            }
             onPress={handleSubmit(handleAdd)}
           />
         </View>

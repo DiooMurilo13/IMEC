@@ -9,7 +9,7 @@ npm-debug.*
 *.mobileprovision
 *.orig.*
 .env.local
-
+src/firebase/Auth.tsx
 # macOS
 .DS_Store
 
