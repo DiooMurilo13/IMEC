@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { TextInput, Button, View } from "react-native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
-const Search = ({ onSearch }) => {
+const Search = ({ onSearch, name }) => {
   const [nome, setNome] = useState("");
 
   const handleNomeChange = (text) => {
@@ -15,7 +15,7 @@ const Search = ({ onSearch }) => {
       <TextInput
         className=" items-center font-bold text-2xl text-start justify-center flex-1"
         placeholderTextColor={"black"}
-        placeholder={"Nome do Cliente... "}
+        placeholder={`Nome do ${name}`}
         caretHidden={true}
         value={nome}
         onChangeText={handleNomeChange}

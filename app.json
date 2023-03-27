@@ -1,8 +1,16 @@
 {
   "expo": {
-    "plugins": [["expo-document-picker"]],
+    "plugins": [
+      ["expo-document-picker"],
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "Permita IMEC acessar sua camera."
+        }
+      ]
+    ],
     "name": "IMEC",
-    "slug": "scale-builder",
+    "slug": "IMEC",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./img/logos.png",
@@ -21,7 +29,7 @@
         "foregroundImage": "./img/logos.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.ghostline.scalebuilder"
+      "package": "com.ghostline.IMEC"
     },
     "web": {
       "favicon": "./assets/favicon.png"

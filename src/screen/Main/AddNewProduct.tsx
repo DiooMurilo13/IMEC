@@ -10,8 +10,9 @@ import { db } from "../../Helpers/db";
 import { Text } from "react-native";
 import Form from "../../components/Form";
 import { useForm } from "react-hook-form";
+import FormProduct from "../../components/FormProduct";
 
-const AddNewClient: React.FC = () => {
+function AddNewProduct() {
   const navigation = useNavigation();
   const database = new Database();
   const {
@@ -23,12 +24,11 @@ const AddNewClient: React.FC = () => {
   async function handleAdd(data) {
     const value = new AddValue();
     value.newList();
-    await value.addNewClient(
-      data.nome, //lembrar de pegar esse cara inteiro e jogar pra dentro do firebaseHelper
-      data.telefone,
-      data.endereco
+    await value.addNewProduct(
+      data.nome //lembrar de pegar esse cara inteiro e jogar pra dentro do firebaseHelper
     );
-    await database.insert(db.cliente, value.clientList, value.histList);
+
+    await database.insert(db.tipoProduto, value.productList, value.histList);
     navigation.navigate(ScreenView.MAIN);
   }
 
@@ -39,7 +39,11 @@ const AddNewClient: React.FC = () => {
         animation="fadeInUp"
         className="flex-1 bg-cyan-100 rounded-t-3xl mt-5 "
       >
-        <Form control={control} name={"Cliente"} errors={errors} />
+        <FormProduct
+          control={control}
+          name={"Produto/Serviço"}
+          errors={errors}
+        />
         <View className=" justify-center items-center mb-5">
           <Button
             className="h-20 w-80 "
@@ -54,6 +58,6 @@ const AddNewClient: React.FC = () => {
       </Animatable.View>
     </View>
   );
-};
+}
 
-export default AddNewClient;
+export default AddNewProduct;

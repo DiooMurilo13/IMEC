@@ -27,14 +27,14 @@ function CardHistory() {
   const [clienteHistory, setClienteHistory] = useState([]);
   const [usuariosFiltrados, setUsuariosFiltrados] = useState([]);
   const route = useRoute<RouteProp<Record<string, ICliente>, string>>();
-  where.add(db.tipoPagamentoId, condition.EQUALS, route.params.id);
+  where.add(db.tipoProdutoId, condition.EQUALS, route.params.id);
 
   useEffect(() => {
     const getClientes = async () => {
       const clientes = await database.select(
         db.operacao,
         where.list,
-        db.clientes
+        db.cliente
       );
       setClienteHistory(clientes); //tive que fazer isso por que quando eu fiz da forma de inserir clientehistory como default value de usuariosfiltrados, deu ruim é isso rs
       setUsuariosFiltrados(clientes);
@@ -68,7 +68,7 @@ function CardHistory() {
         className="flex-1 bg-cyan-100 rounded-t-3xl mt-5"
       >
         <View className="mt-14"></View>
-        <Search onSearch={handleSearch} />
+        <Search onSearch={handleSearch} name="Cliente..." />
         <View className="flex-1">
           <FlatList
             data={usuariosFiltrados}

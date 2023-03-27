@@ -1,10 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { SafeAreaView, Text, TouchableOpacity, View } from "react-native";
 import { Camera, CameraType } from "expo-camera";
 
-const CameraComponent: React.FC = () => {
+interface IProps {
+  onPress: (e?: any) => void | Promise<void>;
+}
+
+function CameraComponent({ onPress }: IProps) {
   const [type, setType] = useState<CameraType>(Camera.Constants.Type.back);
   const [temPerm, setPerm] = useState(null);
+  const [cameraRef, setCameraRef] = useState<Camera>(null);
 
   useEffect(() => {
     async function teste() {
@@ -15,7 +20,7 @@ const CameraComponent: React.FC = () => {
     }
 
     teste();
-  });
+  }, []);
 
   if (temPerm === null) {
     return <View />;
@@ -25,17 +30,17 @@ const CameraComponent: React.FC = () => {
   }
 
   return (
-    <View style={{ flex: 1 }}>
-      <Camera style={{ flex: 1 }} type={type}>
-        <View
-          style={{
-            flex: 1,
-            backgroundColor: "transparent",
-            flexDirection: "row",
-          }}
-        >
+    <View className="flex-1">
+      <Camera
+        className="flex-1"
+        type={type}
+        ref={(ref) => {
+          setCameraRef(ref);
+        }}
+      >
+        <View className="flex-1 bg-transparent flex-row">
           <TouchableOpacity
-            style={{ flex: 0.1, alignSelf: "flex-end", alignItems: "center" }}
+            className="w-2/5 flex-end justify-end"
             onPress={() => {
               setType(
                 type === Camera.Constants.Type.back
@@ -48,10 +53,23 @@ const CameraComponent: React.FC = () => {
               Flip
             </Text>
           </TouchableOpacity>
+          <TouchableOpacity
+            className="w-3/6 flex-end justify-end"
+            onPress={async () => {
+              if (cameraRef) {
+                let photo = await cameraRef.takePictureAsync();
+                onPress(photo);
+              }
+            }}
+          >
+            <Text style={{ fontSize: 18, marginBottom: 10, color: "white" }}>
+              Tirar Foto
+            </Text>
+          </TouchableOpacity>
         </View>
       </Camera>
     </View>
   );
-};
+}
 
 export default CameraComponent;

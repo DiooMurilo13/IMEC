@@ -31,13 +31,11 @@ function CardStyled({
         >
           <View className="mt-3">
             <Text className="font-bold text-2xl text-myColor-100 ">
-              {descricao}
+              {descricao.slice(0, 20)}
             </Text>
           </View>
           <View className="flex-row justify-between pr-5">
-            <Text className="font-bold text-lg text-myColor-300 ">
-              {name.toUpperCase()}
-            </Text>
+            <Text className="font-bold text-lg text-myColor-300 ">{name}</Text>
             <Text className="text-lg font-bold text-green-500">R$ 350,00</Text>
           </View>
           <View className="mb-3">

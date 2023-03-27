@@ -5,4 +5,6 @@ export enum ScreenView {
   MAIN = "Main",
   CARDHISTORY = "CardHistory",
   ADDNEWCLIENT = "AddNewClient",
+  ADDNEWPRODUCT = "AddNewProduct",
+  ADDNEWSALE = "AddNewSale",
 }

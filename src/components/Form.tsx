@@ -2,9 +2,6 @@ import React, { useState } from "react";
 import { Text, View, TextInput, KeyboardAvoidingView } from "react-native";
 import { Control, Controller, FieldErrors, FormState } from "react-hook-form";
 import { TextInputMask } from "react-native-masked-text";
-import DropDownPicker from "react-native-dropdown-picker";
-import { Keyboard } from "react-native";
-import ComboBox from "./ComboBox";
 
 interface Form {
   control: Control<any, any>;

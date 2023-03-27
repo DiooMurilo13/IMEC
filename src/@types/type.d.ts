@@ -9,21 +9,8 @@ declare global {
       [ScreenView.MAIN]: string | params;
       [ScreenView.CARDHISTORY]: string | params;
       [ScreenView.ADDNEWCLIENT]: string | params;
+      [ScreenView.ADDNEWPRODUCT]: string | params;
+      [ScreenView.ADDNEWSALE]: string | params;
     }
   }
-}
-
-declare module "expo-camera" {
-  export type CameraConstantsType = {
-    Type: {
-      front: CameraType;
-      back: CameraType;
-    };
-    FlashMode: {
-      on: CameraFlashMode;
-      off: CameraFlashMode;
-      auto: CameraFlashMode;
-      torch: CameraFlashMode;
-    };
-  };
 }

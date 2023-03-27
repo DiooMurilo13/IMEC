@@ -16,21 +16,7 @@ interface ICardFormProps {
   ) => Promise<void> | void;
 }
 
-function CardStyled({ descricao, id, onPress, ...rest }: ICardFormProps) {
-  const where = new Where();
-  const database = new Database();
-  const navigation = useNavigation();
-  const [quantidade, setQuantidade] = useState([]);
-  where.add(db.tipoPagamentoId, condition.EQUALS, id);
-
-  useEffect(() => {
-    const getQuantidade = async () => {
-      const tipoPagamento = await database.select(db.operacao, where.list);
-      setQuantidade(tipoPagamento);
-    };
-    getQuantidade();
-  }, [id]);
-
+function CardStyledTPs({ descricao, id, onPress, ...rest }: ICardFormProps) {
   return (
     <>
       <View className="m-3 text-start">
@@ -43,14 +29,11 @@ function CardStyled({ descricao, id, onPress, ...rest }: ICardFormProps) {
             <Text className="font-bold text-2xl text-myColor-300">
               {descricao.toUpperCase()}
             </Text>
-            <Text className="text-3xl font-bold text-myColor-300">
-              {quantidade.length}
-            </Text>
           </View>
         </TouchableOpacity>
       </View>
     </>
   );
 }
-const CardScreen = styled(CardStyled);
-export { CardScreen };
+const CardScreenTP = styled(CardStyledTPs);
+export { CardScreenTP };

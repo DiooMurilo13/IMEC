@@ -1,35 +1,41 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import * as Animatable from "react-native-animatable";
 import { ScrollView, Text, View } from "react-native";
 import { Database } from "../../firebase/FirebaseHelper";
 import { useNavigation } from "@react-navigation/native";
 import { db } from "../../Helpers/db";
 import { ScreenView } from "../../@types/file";
-import { Button } from "../../components/Button";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import { Button } from "../../components/Button";
 import { CardView } from "../../components/CardView";
 import { CardScreen } from "../../components/CardScreen";
+import { Camera } from "expo-camera";
 
 const Main: React.FC = () => {
   const database = new Database();
   const navigation = useNavigation();
-  const [tipoPagamento, setTipoPagamento] = useState([]);
+  const [tipoProduto, setTipoProduto] = useState([]);
   const [reload, setReload] = useState(false);
 
   useEffect(() => {
     const getClientes = async () => {
-      const tipoPagamento = await database.select(db.tipoPagamento);
-      setTipoPagamento(tipoPagamento);
+      const tipoProduto = await database.select(db.tipoProduto);
+      setTipoProduto(tipoProduto);
     };
 
     getClientes();
     navigation.addListener("focus", () => setReload(!reload));
   }, [reload]);
 
-  async function onPress() {
+  async function onRedirectNewClientScreen() {
     navigation.navigate(ScreenView.ADDNEWCLIENT);
   }
-
+  async function onRedirectNewProductScreen() {
+    navigation.navigate(ScreenView.ADDNEWPRODUCT);
+  }
+  async function onRedirectNewSale() {
+    navigation.navigate(ScreenView.ADDNEWSALE);
+  }
   //nao componentizei nada aqui, to fazendo aos poucos.
 
   return (
@@ -51,13 +57,33 @@ const Main: React.FC = () => {
             <View className="justify-center items-center flex w-24">
               <Button
                 className="bg-gray-400 w-20 h-20"
-                onPress={onPress}
+                onPress={onRedirectNewClientScreen}
                 funcao={
                   <Icon name="account-arrow-up" size={30} color="#FAFAFA" />
                 }
               />
               <Text className="text-xl font-bold text-center">
                 Adicionar Cliente
+              </Text>
+            </View>
+            <View className="justify-center items-center flex w-24">
+              <Button
+                className="bg-gray-400 w-20 h-20"
+                onPress={onRedirectNewProductScreen}
+                funcao={<Icon name="folder-plus" size={30} color="#FAFAFA" />}
+              />
+              <Text className="text-xl font-bold text-center">
+                Adicionar produto
+              </Text>
+            </View>
+            <View className="justify-center items-center flex w-24">
+              <Button
+                className="bg-gray-400 w-20 h-20"
+                onPress={onRedirectNewSale}
+                funcao={<Icon name="point-of-sale" size={30} color="#FAFAFA" />}
+              />
+              <Text className="text-xl font-bold text-center">
+                Adicionar Venda
               </Text>
             </View>
           </ScrollView>
@@ -70,15 +96,15 @@ const Main: React.FC = () => {
         >
           <View className="flex-1  rounded-t-3xl">
             <ScrollView className="mt-5">
-              {tipoPagamento.map((user) => {
+              {tipoProduto.map((tipoProduto) => {
                 return (
                   <CardScreen
-                    key={user.id}
-                    descricao={user.descricao}
-                    id={user.TipoPagamentoId}
+                    key={tipoProduto.id}
+                    descricao={tipoProduto.tipoProduto_descricao}
+                    id={tipoProduto.TipoProdutoId}
                     onPress={() =>
                       navigation.navigate(ScreenView.CARDHISTORY, {
-                        id: user.TipoPagamentoId,
+                        id: tipoProduto.TipoProdutoId,
                       })
                     }
                   />

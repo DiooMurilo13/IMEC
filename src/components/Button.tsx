@@ -14,7 +14,7 @@ function ButtonStyled({ name, funcao, onPress, ...rest }: ILoginFormProps) {
   return (
     <>
       <TouchableOpacity
-        className="items-center justify-center bg-blue-700 rounded-full"
+        className="items-center justify-center bg-blue-700 rounded-lg"
         {...rest}
         onPress={onPress}
       >

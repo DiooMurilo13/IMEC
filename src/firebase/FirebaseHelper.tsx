@@ -15,7 +15,9 @@ import {
   query,
   where,
 } from "firebase/firestore";
-import { app, auth, db } from "./Auth";
+import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
+
+import { app, auth, db, dba } from "./Auth";
 
 export class Database {
   async insert(table: string, value: any[], hist: any[]) {
